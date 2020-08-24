@@ -1,12 +1,10 @@
-import React,{Component} from "react"
+import React from "react"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.css"
-// import Axios from 'axios';
-// import {Link} from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 function ErrorComponent(args)
 {
-    console.log(args);
     return(
         <div className="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>{args.Error.msg}</strong>
@@ -17,47 +15,20 @@ function ErrorComponent(args)
     );
 }
 
-class Messages extends Component
-{
-    constructor(props)
-    {
-        super(props);
-        this.state={
-            errors:[]
-        }
-        this.ListAllErrors=this.ListAllErrors.bind(this);
-    }
-    componentDidMount()
-    {
-        this.setState({
-            errors:this.props.errors
-        })
-    }
-    ListAllErrors()
-    {
-        const Errors=this.props.errors;
-        // console.log(Errors);
-        if(Errors.length===0)
-        {
-            return (<div/>);
-        }
-        else
-        {
-            return Errors.map(curError=>{
-                
-                return(<ErrorComponent Error={curError}
-                                        key={curError.msg}/>)
-            })
-        }
-    }
-    render()
-    {
+function Messages(props){
+   
+    console.log(props);
+    var Errors = props.errors;
+    
+    if(props.isValidSignup) return <Redirect to='/home' /> ;
+
         return(
             <div>
-                {this.ListAllErrors()}
+                {Errors.length ? Errors.map(curError => <ErrorComponent Error={curError} key={curError.msg} />) : <div/> }
             </div>
+            
         )
     }
-}
+
 
 export default Messages;

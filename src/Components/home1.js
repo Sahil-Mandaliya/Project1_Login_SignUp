@@ -23,8 +23,11 @@ class home1 extends Component
     }
     render()
     {
+    
         return(
+           
             <form onSubmit={this.onSubmit}>
+               
                 <div className="card center">
                     <button type="submit" className="btn btn-danger">Get All Emails</button>
                  </div>
