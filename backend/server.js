@@ -9,11 +9,15 @@ const port=5001
 app.use(cors());
 app.use(express.json());
 
-const uri=process.env.DB_CONNECTION;
-mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true});
+const uri ="mongodb://localhost:27017/d";
+mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology: true}).then(()=>{
+    console.log("coectio success QQQ");
+}).catch(()=>{
+    console.log("fail ....");
+});
 
-const connection=mongoose.connection;
-connection.once('open',()=>{console.log("connected to database successfully!")});
+// const connection=mongoose.connection;
+// connection.once('open',()=>{console.log("connected to database successfully!")});
 
 // const exerciseRouter=require('./routes/exercise');
 // const userRouter=require('./routes/user');

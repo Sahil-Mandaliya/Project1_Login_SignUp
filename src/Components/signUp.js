@@ -14,6 +14,7 @@ class signUp extends Component
             email:"",
             password:"",
             confirmPassword:"",
+            isValidSignup : false,
             errors:[],
         }
         // console.log(this.props);
@@ -48,28 +49,12 @@ class signUp extends Component
             email:this.state.email,
             password:this.state.password,
             confirmPassword:this.state.confirmPassword,
-            errors:this.state.errors
         }
-        console.log(this.state.password);
-        console.log(this.state.confirmPassword);
-        // console.log(this.props);
-        // console.log(typeof(this.props.curError));
+
+     
         Axios.post("http://localhost:5001/profiles/add",newProfile)
-                 .then(res=>{
-                        if(res.data.length>0)
-                        {
-                            // this.setState({
-                            //     errors:["error"]
-                            // }) 
-                            this.setState({
-                                errors:res.data
-                            })   
-                        }
-                        else
-                        {
-                            window.location('/home');
-                        }
-                    }
+                 .then(
+                     res=>{ res.data.length>0 ? this.setState({errors: res.data}) : this.setState({isValidSignup : true})}
                     )
                  .catch(err=>console.log(err));
             
@@ -81,7 +66,7 @@ class signUp extends Component
                 <div className="card center border border-dark rounded" style={{width:"30rem"}}>
                     <div className="card-body"> 
                         <h2 className="card-title">Sign Up</h2>
-                        <Messages errors={this.state.errors}/>
+                        <Messages errors={this.state.errors} isValidSignup={this.state.isValidSignup}/>
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
                                
